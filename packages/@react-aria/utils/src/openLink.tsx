@@ -18,7 +18,7 @@ import React, {createContext, ReactNode, useContext, useMemo} from 'react';
 interface Router {
   isNative: boolean,
   open: (target: Element, modifiers: Modifiers, href: Href, routerOptions: RouterOptions | undefined) => void,
-  useHref: (href: Href) => string
+  useHref: (href: Href, routerOptions: RouterOptions | undefined) => string
 }
 
 const RouterContext = createContext<Router>({
@@ -29,7 +29,7 @@ const RouterContext = createContext<Router>({
 
 interface RouterProviderProps {
   navigate: (path: Href, routerOptions: RouterOptions | undefined) => void,
-  useHref?: (href: Href) => string,
+  useHref?: (href: Href, routerOptions: RouterOptions | undefined) => string,
   children: ReactNode
 }
 
@@ -160,7 +160,7 @@ export function getSyntheticLinkProps(props: LinkDOMProps) {
 export function useLinkProps(props: LinkDOMProps) {
   let router = useRouter();
   return {
-    href: props?.href ? router.useHref(props?.href) : undefined,
+    href: props?.href ? router.useHref(props?.href, props?.routerOptions) : undefined,
     target: props?.target,
     rel: props?.rel,
     download: props?.download,

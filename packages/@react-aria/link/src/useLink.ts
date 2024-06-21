@@ -17,7 +17,7 @@ import React, {RefObject} from 'react';
 import {useFocusable} from '@react-aria/focus';
 import {usePress} from '@react-aria/interactions';
 
-export interface AriaLinkOptions extends AriaLinkProps {
+export interface AriaLinkOptions<To extends string=string> extends AriaLinkProps<To> {
   /** Whether the link is disabled. */
   isDisabled?: boolean,
   /**

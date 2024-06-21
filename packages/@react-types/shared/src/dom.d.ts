@@ -173,15 +173,15 @@ export interface TextInputDOMProps extends DOMProps, InputDOMProps, TextInputDOM
  * This type allows configuring link props with router options and type-safe URLs via TS module augmentation.
  * By default, this is an empty type. Extend with `href` and `routerOptions` properties to configure your router.
  */
-export interface RouterConfig {}
+export interface RouterConfig<To extends string = ''> {}
 
-export type Href = RouterConfig extends {href: infer H} ? H : string;
-export type RouterOptions = RouterConfig extends {routerOptions: infer O} ? O : never;
+export type Href = RouterConfig<string> extends {href: infer H} ? H : string;
+export type RouterOptions<To extends Href = Href> = RouterConfig<To> extends {routerOptions: infer O} ? O : never;
 
 // Make sure to update filterDOMProps.ts when updating this.
-export interface LinkDOMProps {
+export interface LinkDOMProps<To extends Href = Href> {
   /** A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href). */
-  href?: Href,
+  href?: To,
   /** Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang). */
   hrefLang?: string,
   /** The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target). */
@@ -195,7 +195,7 @@ export interface LinkDOMProps {
   /** How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy). */
   referrerPolicy?: HTMLAttributeReferrerPolicy,
   /** Options for the configured client side router. */
-  routerOptions?: RouterOptions
+  routerOptions?: RouterOptions<To>
 }
 
 /** Any focusable element, including both HTML and SVG elements. */

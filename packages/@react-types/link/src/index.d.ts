@@ -15,7 +15,7 @@ import {ReactNode} from 'react';
 
 export interface LinkProps extends PressEvents, FocusableProps {}
 
-export interface AriaLinkProps extends LinkProps, LinkDOMProps, AriaLabelingProps { }
+export interface AriaLinkProps<To extends string = string> extends LinkProps, LinkDOMProps<To>, AriaLabelingProps { }
 
 export interface SpectrumLinkProps extends AriaLinkProps, StyleProps {
   /** The content to display in the link. */
